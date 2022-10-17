@@ -1,0 +1,2 @@
+- This is a Simple Flask application .
+- This app is dockerized and pushed to my docker hub account for test purposes.
