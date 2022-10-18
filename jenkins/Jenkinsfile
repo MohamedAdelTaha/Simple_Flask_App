@@ -20,6 +20,15 @@ pipeline {
             steps {
                 sh 'sudo docker run -d -p 5005:5000 mohamedadeltaha/ViewsCounterApp:v1.0'
             }
+
+            post{
+                success{
+                    slackSend(color:'#47d147', message:'Successfully Build, Deploy and Run our app in AWS_ec2_Slave')
+                }
+                failure{
+                    slackSend(color:'#ff0000', message:'process faild in AWS_ec2_Slave')
+                }
+            }
         }
     }
 }
