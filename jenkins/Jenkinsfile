@@ -1,0 +1,10 @@
+pipeline {
+    agent any
+    stages {
+        stage('Greeting') {
+            steps {
+                sh 'Hello from main branch'
+            }
+        }
+    }
+}
