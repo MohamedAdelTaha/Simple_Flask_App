@@ -3,7 +3,22 @@ pipeline {
     stages {
         stage('Greeting') {
             steps {
-                sh 'Hello from main branch'
+                sh 'Hello from test branch'
+            }
+        }
+        stage('preparation') {
+            steps {
+                git 'https://github.com/MohamedAdelTaha/Simple_Flask_App.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'sudo docker build . -t mohamedadeltaha/ViewsCounterApp:v1.0'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'sudo docker run -d -p 5005:5000 mohamedadeltaha/ViewsCounterApp:v1.0'
             }
         }
     }
