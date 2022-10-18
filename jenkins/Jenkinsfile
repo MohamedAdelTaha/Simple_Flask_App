@@ -13,25 +13,25 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'sudo docker build . -t mohamedadeltaha/views-counter-app:v1.0'
+                sh 'sudo docker build . -t mohamedadeltaha/simple-flask-app:v1.0'
             }
         }
         stage('artifact') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                     sh 'sudo docker login -u ${USERNAME} -p ${PASSWORD}'
-                    sh 'sudo docker push mohamedadeltaha/views-counter-app:v1.0'
+                    sh 'sudo docker push mohamedadeltaha/simple-flask-app:v1.0'
                 }
             }
         }
         stage('Deploy') {
             steps {
-                sh 'sudo docker run -d -p 5005:5000 mohamedadeltaha/views-counter-app:v1.0'
+                sh 'sudo docker run -d -p 5005:5000 mohamedadeltaha/simple-flask-app:v1.0'
             }
 
             post{
                 success{
-                    slackSend(color:'#47d147', message:'Successfully Build, Deploy and Run our app in Docker_Slave_Container')
+                    slackSend(color:'#47d147', message:'All steps have been completed successfully for our app in Docker_Slave_Container')
                 }
                 failure{
                     slackSend(color:'#ff0000', message:'process faild in Docker_Slave_Container')
