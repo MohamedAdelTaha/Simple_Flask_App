@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Greeting') {
             steps {
-                sh 'echo Hello from test branch'
+                sh 'echo "Hello from test branch"'
             }
         }
         stage('preparation') {
@@ -13,17 +13,17 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'sudo docker build . -t mohamedadeltaha/views-counter-app:v1.0'
+                sh 'sudo docker build . -t mohamedadeltaha/simple-flask-app:v1.0'
             }
         }
         stage('Deploy') {
             steps {
-                sh 'sudo docker run -d -p 5005:5000 mohamedadeltaha/views-counter-app:v1.0'
+                sh 'sudo docker run -d -p 5005:5000 mohamedadeltaha/simple-flask-app:v1.0'
             }
 
             post{
                 success{
-                    slackSend(color:'#47d147', message:'Successfully Build, Deploy and Run our app in AWS_ec2_Slave')
+                    slackSend(color:'#47d147', message:'All steps have been completed successfully for our app in AWS_ec2_Slave')
                 }
                 failure{
                     slackSend(color:'#ff0000', message:'process faild in AWS_ec2_Slave')
